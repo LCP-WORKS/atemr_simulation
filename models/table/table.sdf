@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="unit-table">
+    <static>true</static>
+    <link name="link">
+      <collision name='collision'>
+            <pose>-1.655 1.25 0.323 0 0 0 0</pose>
+            <geometry>
+              <box>
+              <size>1.51 1.57 0.616</size>
+            </box>
+          </geometry>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>true</cast_shadows>
+        <pose>0.0 0.0 0.015 0 0 0 0</pose>
+        <geometry>
+            <mesh>
+                <uri>model://table/meshes/table.dae</uri>
+            </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
