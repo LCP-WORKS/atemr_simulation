@@ -1,11 +1,21 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="x_pos" default="0.0"/>
-  <arg name="y_pos" default="0.0"/>
-  <arg name="z_pos" default="0.1"/>
+  <arg name="room" default="cylindrical"/>
+  <arg name="x_pos" value="-4.656597" if="$(eval room == 'sphere')"/> sphere-room
+  <arg name="y_pos" value="-4.114100" if="$(eval room == 'sphere')"/>
+  <arg name="z_pos" value="0.1"/>
+  <arg name="r_yaw" value="-0.212924" if="$(eval room == 'sphere')"/>
+
+  <arg name="x_pos" value="6.573576" if="$(eval room == 'cube')"/> cube-room
+  <arg name="y_pos" value="-8.318842" if="$(eval room == 'cube')"/>
+  <arg name="r_yaw" value="1.522138" if="$(eval room == 'cube')"/>
+
+  <arg name="x_pos" value="6.135050" if="$(eval room == 'cylindrical')"/> cylindrical-room
+  <arg name="y_pos" value="8.165712" if="$(eval room == 'cylindrical')"/>
+  <arg name="r_yaw" value="-2.682827" if="$(eval room == 'cylindrical')"/>
   
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
-	  <arg name="world_name" value="worlds/residential_unit.world"/>
+	  <arg name="world_name" value="worlds/three-fold-verse.world"/>
 	  <arg name="paused" value="false"/>
 	  <arg name="use_sim_time" value="true"/>
 	  <arg name="gui" value="true"/>
@@ -17,10 +27,9 @@
 		<rosparam command="load" file="$(find atemr_simulation)/config/sim_control.yaml" />
 		<param name="robot_description" command="$(find xacro)/xacro $(find atemr_description)/urdf/robot.urdf.xacro"/>
 		<node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model atemrV1
-		-x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
+		-x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -Y $(arg r_yaw) -param robot_description" />
 
 		<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-		<include file="$(find imu_filter_madgwick)/launch/imu_filter_madgwick.launch" />
 	</group>
 
 </launch>
